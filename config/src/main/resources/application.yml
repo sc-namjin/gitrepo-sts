@@ -1,0 +1,26 @@
+server:
+  port: ${service_port:9001}
+spring:
+  application: 
+    name: config
+
+# Actuator endpoints
+management.endpoints.web.exposure.include: health, metrics, bus-refresh
+            
+---
+spring:
+  cloud:
+    config:
+      server:        
+        git:
+          uri: https://${git_host:github.com}:${git_port:443}/${git_org:sc-namjin}/${git_repo:configmng.git}
+          username: ${git_id:namjinpark}
+          password: ${git_pw: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}                            
+          search-paths: /*                       #base directory to search profiles
+          default-label: ${git_branch:main}      #git branch
+          
+  rabbitmq:
+    host: ${mq_host:192.168.101.3}
+    port: ${mq_port:32725}
+    username: ${mq_id:guest}
+    password: ${mq_pw:guest}
